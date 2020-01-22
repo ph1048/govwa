@@ -1,16 +1,15 @@
 package setting
 
-import(
-	
+import (
 	"fmt"
-	"strings"
-	"runtime"
 	"net/http"
+	"runtime"
+	"strings"
 
-	"govwa/util"
-	"govwa/user/session"
-	"govwa/util/database"
-	"govwa/util/middleware"
+	"github.com/launchdarkly/govwa/user/session"
+	"github.com/launchdarkly/govwa/util"
+	"github.com/launchdarkly/govwa/util/database"
+	"github.com/launchdarkly/govwa/util/middleware"
 
 	"github.com/julienschmidt/httprouter"
 )
@@ -30,7 +29,7 @@ func (self Setting) SetRouter(r *httprouter.Router) {
 
 }
 
-func settingViewHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params){
+func settingViewHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	data := make(map[string]interface{})
 
 	data["title"] = "Setting & system info"
@@ -39,38 +38,39 @@ func settingViewHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Par
 	data["currentuser"] = getCurrentUserName(r)
 	data["level"] = getCurrentLevel(r)
 
-	util.SafeRender(w,r,"template.setting", data)
-	
+	util.SafeRender(w, r, "template.setting", data)
+
 }
 
-func setLevelAction(w http.ResponseWriter, r *http.Request, _ httprouter.Params){
-	if r.Method == "POST" && r.FormValue("level") != ""{
+func setLevelAction(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	if r.Method == "POST" && r.FormValue("level") != "" {
 		level := r.FormValue("level")
 		util.SetCookieLevel(w, r, level)
-		res := struct{
+		res := struct {
 			Res string
 		}{
-			Res : "Success",
+			Res: "Success",
 		}
 		util.RenderAsJson(w, res)
 	}
 }
 
-func getDBMSVersion()string{
-	const sql=`
+func getDBMSVersion() string {
+	const sql = `
 			select @@version
 	`
 	var version string
-	db,_ := database.Connect()
+	db, _ := database.Connect()
+	defer db.Close()
 
 	_ = db.QueryRow(sql).Scan(&version)
 	dbversion := strings.Split(version, "-")
 	return dbversion[0]
 }
 
-func getOSVersion()string{
-	
-	switch os := runtime.GOOS; os{
+func getOSVersion() string {
+
+	switch os := runtime.GOOS; os {
 	case "darwin":
 		return "OS X"
 	case "linux":
@@ -81,13 +81,13 @@ func getOSVersion()string{
 	return ""
 }
 
-func getCurrentUserName(r *http.Request)string{
+func getCurrentUserName(r *http.Request) string {
 	s := session.New()
 	uname := s.GetSession(r, "uname")
 	return uname
 }
 
-func getCurrentLevel(r *http.Request)string{
-	level := util.GetCookie(r,"Level")
+func getCurrentLevel(r *http.Request) string {
+	level := util.GetCookie(r, "Level")
 	return level
 }

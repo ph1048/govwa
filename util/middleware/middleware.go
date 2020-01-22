@@ -7,8 +7,8 @@ import(
 	"regexp"
 	"net/http"
 
-	"govwa/util/config"
-	"govwa/user/session"
+	"github.com/launchdarkly/govwa/util/config"
+	"github.com/launchdarkly/govwa/user/session"
 	"github.com/julienschmidt/httprouter"
 )
 

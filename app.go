@@ -6,16 +6,16 @@ import (
 
 	"github.com/julienschmidt/httprouter"
 
-	"govwa/setup"
-	"govwa/user"
-	"govwa/util"
-	"govwa/util/config"
-	"govwa/setting"
-	"govwa/util/middleware"
-	"govwa/vulnerability/csa"
-	"govwa/vulnerability/sqli"
-	"govwa/vulnerability/xss"
-	"govwa/vulnerability/idor"
+	"github.com/launchdarkly/govwa/setting"
+	"github.com/launchdarkly/govwa/setup"
+	"github.com/launchdarkly/govwa/user"
+	"github.com/launchdarkly/govwa/util"
+	"github.com/launchdarkly/govwa/util/config"
+	"github.com/launchdarkly/govwa/util/middleware"
+	"github.com/launchdarkly/govwa/vulnerability/csa"
+	"github.com/launchdarkly/govwa/vulnerability/idor"
+	"github.com/launchdarkly/govwa/vulnerability/sqli"
+	"github.com/launchdarkly/govwa/vulnerability/xss"
 )
 
 const (
@@ -33,19 +33,19 @@ const (
 //index and set cookie
 
 func indexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	
+
 	util.SetCookieLevel(w, r, "low") //set cookie Level default to low
 
 	data := make(map[string]interface{})
 	data["title"] = "Index"
 
-	util.SafeRender(w,r,"template.index", data)
+	util.SafeRender(w, r, "template.index", data)
 }
 
 func main() {
 
 	fmt.Println(banner)
-	
+
 	mw := middleware.New()
 	router := httprouter.New()
 	user := user.New()
@@ -67,14 +67,14 @@ func main() {
 	csa.SetRouter(router)
 	setup.SetRouter(router)
 	setting.SetRouter(router)
-	
+
 	s := http.Server{
-		Addr : ":8082",
-		Handler : router,
+		Addr:    ":8082",
+		Handler: router,
 	}
 
 	fmt.Printf("Server running at port %s\n", s.Addr)
-	fmt.Printf("Open this url %s on your browser to access GoVWA",config.Fullurl)
+	fmt.Printf("Open this url %s on your browser to access GoVWA", config.Fullurl)
 	fmt.Println("")
 	s.ListenAndServe()
 

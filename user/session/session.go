@@ -6,7 +6,7 @@ import (
 	"log"
 	"fmt"
 	"net/http"
-	"govwa/util/config"
+	"github.com/launchdarkly/govwa/util/config"
 	"github.com/gorilla/sessions"
 )
 

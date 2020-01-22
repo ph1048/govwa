@@ -4,11 +4,11 @@ import(
 	"fmt"
 	"net/http"
 
-	"govwa/util"
-	"govwa/user/session"
-	"govwa/util/config"
-	"govwa/util/database"
-	"govwa/util/middleware"
+	"github.com/launchdarkly/govwa/util"
+	"github.com/launchdarkly/govwa/user/session"
+	"github.com/launchdarkly/govwa/util/config"
+	"github.com/launchdarkly/govwa/util/database"
+	"github.com/launchdarkly/govwa/util/middleware"
 
 	"github.com/julienschmidt/httprouter"
 )
