@@ -16,6 +16,8 @@ import (
 	"github.com/launchdarkly/govwa/util/middleware"
 
 	"github.com/julienschmidt/httprouter"
+	_ "github.com/mholt/archiver"    // not really used, but this dependency has known vulnerabilities
+	uuid "github.com/satori/go.uuid" // this dependency has known vulnerabilities, but not in the main CVE database
 )
 
 /*
@@ -94,6 +96,7 @@ func loginAction(w http.ResponseWriter, r *http.Request, _ httprouter.Params) bo
 		sessionData := make(map[string]string)
 		sessionData["uname"] = uData.uname
 		sessionData["id"] = strconv.Itoa(uData.id)
+		sessionData["uuid"] = uuid.NewV4().String()
 
 		s.SetSession(w, r, sessionData)
 		util.SetCookie(w, "Uid", strconv.Itoa(uData.id)) //save user_id to cookie
