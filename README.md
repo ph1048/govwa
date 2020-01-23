@@ -1,14 +1,27 @@
-#### GoVWA
+## GoVWA
 ---
 GoVWA (Go Vulnerable Web Application) is a web application developed to help the pentester and programmers to learn the vulnerabilities that often occur in web applications which is developed using golang. Vulnerabilities that exist in GoVWA are the most common vulnerabilities found in web applications today. So it will help programmers recognize vulnerabilities before they happen to their application. Govwa can also be an additional application of your pentest lab for learning and teaching.
 
-#### WARNING!
+### WARNING!
 ---
 Since GoVWA is a web application that contains a vulnerability, **never upload govwa to web hosting that can be accessed publicly, because it can cause your server to get hacked**. As a suggestion to use GoVWA locally.
 
-#### How To Install GoVWA
+## Your Task
+
+You are joining a team that has an existing code base, developed over the last few years. The engineering team so far has been focused more on delivering functionality, but realizes that they have probably neglected some important security concerns.
+
+Given the following code base, what changed would you propose:
+
+* To the build process
+* To the development lifecycle
+* To team structure/human processes
+* Deployment infrastructure
+
+You are free to make assumptions about the existing processes & lifecycle, but please document these assumptions.
+
+## How To Install GoVWA
 ---
-#### Installing golang
+### Installing golang
 If you didn't have golang installed on your system. first, install it using automation script from https://github.com/canha/golang-tools-install-script.
 
 Follow the instruction which is provided by the author and install golang depending on your Operating System Architecture.
@@ -30,6 +43,13 @@ go get github.com/gorilla/sessions
 go get github.com/julienschmidt/httprouter
 ```
 
+### Building the project
+
+There is a bare-bones Makefile that you can extend to show the changes you would make to 
+the build process (or possibly the development lifecycle).
+
+Feel free to assume the CI system already in place is capable of running Make targets.
+
 #### GoVWA config
 ---
 Open the file config.json which is located in config directory. Change the configuration according to your needs.
@@ -46,9 +66,10 @@ Open the file config.json which is located in config directory. Change the confi
 
     "sessionkey:": "G0Vw444"
 }
-
 ```
-Run GoVWA 
+
+## Run GoVWA 
+
 ```
 govwa@ubuntu-server:~/go/src/govwa$ go run app.go 
 ```
